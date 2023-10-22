@@ -1,0 +1,1862 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Basic HTML/Tailwind starter</title>
+    <meta name="description" content="Basic HTML/Tailwind starter" />
+    <meta name="author" content="Daily Dev Tips" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <link rel="stylesheet" href="./styles.css" />
+    <style>
+      @font-face {
+        font-family: 'GTReg';
+        src: url('./fonts/GTWalsheimProRegular.woff') format('woff2'),
+          url('./fonts/GTWalsheimProRegular.woff') format('woff');
+        font-display: swap;
+      }
+
+      @font-face {
+        font-family: 'GTBold';
+        src: url('./fonts/GTWalsheimProBold.woff2') format('woff2'),
+          url('./fonts/GTWalsheimProBold.woff') format('woff');
+        font-display: swap;
+      }
+
+      html {
+        font-family: 'GTReg';
+        font-size: 100%;
+        line-height: 1.8;
+      }
+      h1,
+      h2,
+      h3,
+      h4 {
+        font-family: 'GTBold';
+        margin-bottom: 2rem;
+      }
+      h1 {
+        font-size: 3rem;
+      }
+      h2 {
+        font-size: 1.5rem;
+      }
+      h3 {
+        font-size: 1.4rem;
+      }
+      a {
+        color: #0226ff;
+      }
+      a:hover,
+      a:focus {
+        text-decoration: underline;
+      }
+      p,
+      li {
+        margin-bottom: 1rem;
+      }
+
+      .container {
+        width: 100%;
+        padding-right: 1rem;
+        padding-left: 1rem;
+      }
+
+      /* Logo styles */
+      .c-logo__horn {
+        fill: #d7983e;
+      }
+      .dark .c-logo__horn {
+        fill: #c484eb;
+      }
+      .animate-logo .c-logo__horn {
+        animation: fadeIn 0.2s linear forwards;
+        animation-delay: 1.8s;
+        opacity: 0;
+      }
+      .c-logo__hair {
+        fill: #87786c;
+      }
+      .dark .c-logo__hair {
+        fill: #823f51;
+      }
+      .animate-logo .c-logo__hair {
+        animation: fadeIn 0.2s linear forwards;
+        animation-delay: 1.9s;
+        opacity: 0;
+      }
+      .c-logo__eye-sockets {
+        fill: #f8eed0;
+      }
+      .animate-logo .c-logo__eye-sockets {
+        animation: fadeIn 0.2s linear forwards;
+        animation-delay: 2s;
+        opacity: 0;
+      }
+      .c-logo__face-bg {
+        fill: #eed298;
+      }
+      .dark .c-logo__face-bg {
+        fill: #ebcad5;
+      }
+      .animate-logo .c-logo__face-bg {
+        animation: fadeIn 0.2s linear forwards 2.1s;
+        opacity: 0;
+      }
+      .c-logo__mouth {
+        fill: #f8eed0;
+      }
+      .animate-logo .c-logo__mouth {
+        animation: fadeIn 0.2s linear forwards;
+        animation-delay: 2.2s;
+        opacity: 0;
+      }
+      .c-logo__eye {
+        fill: #3d3d3d;
+      }
+      .animate-logo .c-logo__eye--left {
+        animation: fadeIn 0.2s linear forwards 2.4s, blink 5s infinite 7s;
+        transform-origin: 50%;
+      }
+      .c-logo__eye--right {
+        transform: rotate(0);
+      }
+      .animate-logo .c-logo__eye--right {
+        animation: fadeIn 0.3s linear forwards 2.7s, wink 5s forwards 2.9s,
+          winkInfinite 15s forwards infinite 10s;
+        transform-origin: 50%;
+      }
+      .c-logo__face {
+        stroke-width: 3;
+      }
+      .animate-logo:not(.dark) .c-logo__face {
+        fill: white;
+        stroke-dasharray: 5267.20556640625;
+        stroke-dashoffset: 5267.20556640625;
+        animation: dash 3.5s linear forwards,
+          fillLines 0.3s linear forwards 1.3s;
+        stroke: #3d3d3d;
+      }
+      .dark.animate-logo .c-logo__face {
+        fill: #101827;
+        stroke-dasharray: 5267.20556640625;
+        stroke-dashoffset: 5267.20556640625;
+        animation: dash 3.5s linear forwards,
+          fillLinesDark 0.3s linear forwards 1.3s;
+        stroke: white;
+      }
+      @keyframes winkInfinite {
+        4% {
+          transform: rotate(0deg);
+        }
+        5% {
+          transform: rotate(5deg);
+        }
+        6% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(0deg);
+        }
+      }
+      @keyframes wink {
+        0% {
+          transform: rotate(0deg);
+        }
+        5% {
+          transform: rotate(5deg);
+        }
+        6% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(0deg);
+        }
+      }
+      @keyframes blink {
+        0% {
+          transform: scale(1, 1);
+        }
+        90% {
+          transform: scale(1, 1);
+        }
+        95% {
+          transform: scale(1, 0.05);
+        }
+        100% {
+          transform: scale(1, 1);
+        }
+      }
+      @keyframes fillLines {
+        to {
+          fill: #3d3d3d;
+        }
+      }
+      @keyframes fillLinesDark {
+        to {
+          fill: #101827;
+        }
+      }
+      @keyframes fadeIn {
+        to {
+          opacity: 1;
+        }
+      }
+      @keyframes dash {
+        to {
+          stroke-dashoffset: 0;
+        }
+      }
+
+      /* Tailwind */
+      /*
+! tailwindcss v3.1.4 | MIT License | https://tailwindcss.com
+*/ /*
+1. Prevent padding and border from affecting element width. (https://github.com/mozdevs/cssremedy/issues/4)
+2. Allow adding a border to an element by just adding a border-width. (https://github.com/tailwindcss/tailwindcss/pull/116)
+*/
+
+      *,
+      ::before,
+      ::after {
+        box-sizing: border-box; /* 1 */
+        border-width: 0; /* 2 */
+        border-style: solid; /* 2 */
+        border-color: #e5e7eb; /* 2 */
+      }
+
+      ::before,
+      ::after {
+        --tw-content: '';
+      }
+
+      /*
+1. Use a consistent sensible line-height in all browsers.
+2. Prevent adjustments of font size after orientation changes in iOS.
+3. Use a more readable tab size.
+4. Use the user's configured `sans` font-family by default.
+*/
+
+      html {
+        line-height: 1.5; /* 1 */
+        -webkit-text-size-adjust: 100%; /* 2 */
+        -moz-tab-size: 4; /* 3 */
+        -o-tab-size: 4;
+        tab-size: 4; /* 3 */
+        font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+          'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif,
+          'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol',
+          'Noto Color Emoji'; /* 4 */
+      }
+
+      /*
+1. Remove the margin in all browsers.
+2. Inherit line-height from `html` so users can set them as a class directly on the `html` element.
+*/
+
+      body {
+        margin: 0; /* 1 */
+        line-height: inherit; /* 2 */
+      }
+
+      /*
+1. Add the correct height in Firefox.
+2. Correct the inheritance of border color in Firefox. (https://bugzilla.mozilla.org/show_bug.cgi?id=190655)
+3. Ensure horizontal rules are visible by default.
+*/
+
+      hr {
+        height: 0; /* 1 */
+        color: inherit; /* 2 */
+        border-top-width: 1px; /* 3 */
+      }
+
+      /*
+Add the correct text decoration in Chrome, Edge, and Safari.
+*/
+
+      abbr:where([title]) {
+        -webkit-text-decoration: underline dotted;
+        text-decoration: underline dotted;
+      }
+
+      /*
+Remove the default font size and weight for headings.
+*/
+
+      h1,
+      h2,
+      h3,
+      h4,
+      h5,
+      h6 {
+        font-size: inherit;
+        font-weight: inherit;
+      }
+
+      /*
+Reset links to optimize for opt-in styling instead of opt-out.
+*/
+
+      a {
+        color: inherit;
+        text-decoration: inherit;
+      }
+
+      /*
+Add the correct font weight in Edge and Safari.
+*/
+
+      b,
+      strong {
+        font-weight: bolder;
+      }
+
+      /*
+1. Use the user's configured `mono` font family by default.
+2. Correct the odd `em` font sizing in all browsers.
+*/
+
+      code,
+      kbd,
+      samp,
+      pre {
+        font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+          'Liberation Mono', 'Courier New', monospace; /* 1 */
+        font-size: 1em; /* 2 */
+      }
+
+      /*
+Add the correct font size in all browsers.
+*/
+
+      small {
+        font-size: 80%;
+      }
+
+      /*
+Prevent `sub` and `sup` elements from affecting the line height in all browsers.
+*/
+
+      sub,
+      sup {
+        font-size: 75%;
+        line-height: 0;
+        position: relative;
+        vertical-align: baseline;
+      }
+
+      sub {
+        bottom: -0.25em;
+      }
+
+      sup {
+        top: -0.5em;
+      }
+
+      /*
+1. Remove text indentation from table contents in Chrome and Safari. (https://bugs.chromium.org/p/chromium/issues/detail?id=999088, https://bugs.webkit.org/show_bug.cgi?id=201297)
+2. Correct table border color inheritance in all Chrome and Safari. (https://bugs.chromium.org/p/chromium/issues/detail?id=935729, https://bugs.webkit.org/show_bug.cgi?id=195016)
+3. Remove gaps between table borders by default.
+*/
+
+      table {
+        text-indent: 0; /* 1 */
+        border-color: inherit; /* 2 */
+        border-collapse: collapse; /* 3 */
+      }
+
+      /*
+1. Change the font styles in all browsers.
+2. Remove the margin in Firefox and Safari.
+3. Remove default padding in all browsers.
+*/
+
+      button,
+      input,
+      optgroup,
+      select,
+      textarea {
+        font-family: inherit; /* 1 */
+        font-size: 100%; /* 1 */
+        font-weight: inherit; /* 1 */
+        line-height: inherit; /* 1 */
+        color: inherit; /* 1 */
+        margin: 0; /* 2 */
+        padding: 0; /* 3 */
+      }
+
+      /*
+Remove the inheritance of text transform in Edge and Firefox.
+*/
+
+      button,
+      select {
+        text-transform: none;
+      }
+
+      /*
+1. Correct the inability to style clickable types in iOS and Safari.
+2. Remove default button styles.
+*/
+
+      button,
+      [type='button'],
+      [type='reset'],
+      [type='submit'] {
+        -webkit-appearance: button; /* 1 */
+        background-color: transparent; /* 2 */
+        background-image: none; /* 2 */
+      }
+
+      /*
+Use the modern Firefox focus style for all focusable elements.
+*/
+
+      :-moz-focusring {
+        outline: auto;
+      }
+
+      /*
+Remove the additional `:invalid` styles in Firefox. (https://github.com/mozilla/gecko-dev/blob/2f9eacd9d3d995c937b4251a5557d95d494c9be1/layout/style/res/forms.css#L728-L737)
+*/
+
+      :-moz-ui-invalid {
+        box-shadow: none;
+      }
+
+      /*
+Add the correct vertical alignment in Chrome and Firefox.
+*/
+
+      progress {
+        vertical-align: baseline;
+      }
+
+      /*
+Correct the cursor style of increment and decrement buttons in Safari.
+*/
+
+      ::-webkit-inner-spin-button,
+      ::-webkit-outer-spin-button {
+        height: auto;
+      }
+
+      /*
+1. Correct the odd appearance in Chrome and Safari.
+2. Correct the outline style in Safari.
+*/
+
+      [type='search'] {
+        -webkit-appearance: textfield; /* 1 */
+        outline-offset: -2px; /* 2 */
+      }
+
+      /*
+Remove the inner padding in Chrome and Safari on macOS.
+*/
+
+      ::-webkit-search-decoration {
+        -webkit-appearance: none;
+      }
+
+      /*
+1. Correct the inability to style clickable types in iOS and Safari.
+2. Change font properties to `inherit` in Safari.
+*/
+
+      ::-webkit-file-upload-button {
+        -webkit-appearance: button; /* 1 */
+        font: inherit; /* 2 */
+      }
+
+      /*
+Add the correct display in Chrome and Safari.
+*/
+
+      summary {
+        display: list-item;
+      }
+
+      /*
+Removes the default spacing and border for appropriate elements.
+*/
+
+      blockquote,
+      dl,
+      dd,
+      h1,
+      h2,
+      h3,
+      h4,
+      h5,
+      h6,
+      hr,
+      figure,
+      p,
+      pre {
+        margin: 0;
+      }
+
+      fieldset {
+        margin: 0;
+        padding: 0;
+      }
+
+      legend {
+        padding: 0;
+      }
+
+      ol,
+      ul,
+      menu {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+      }
+
+      /*
+Prevent resizing textareas horizontally by default.
+*/
+
+      textarea {
+        resize: vertical;
+      }
+
+      /*
+1. Reset the default placeholder opacity in Firefox. (https://github.com/tailwindlabs/tailwindcss/issues/3300)
+2. Set the default placeholder color to the user's configured gray 400 color.
+*/
+
+      input::-moz-placeholder,
+      textarea::-moz-placeholder {
+        opacity: 1; /* 1 */
+        color: #9ca3af; /* 2 */
+      }
+
+      input:-ms-input-placeholder,
+      textarea:-ms-input-placeholder {
+        opacity: 1; /* 1 */
+        color: #9ca3af; /* 2 */
+      }
+
+      input::placeholder,
+      textarea::placeholder {
+        opacity: 1; /* 1 */
+        color: #9ca3af; /* 2 */
+      }
+
+      /*
+Set the default cursor for buttons.
+*/
+
+      button,
+      [role='button'] {
+        cursor: pointer;
+      }
+
+      /*
+Make sure disabled buttons don't get the pointer cursor.
+*/
+      :disabled {
+        cursor: default;
+      }
+
+      /*
+1. Make replaced elements `display: block` by default. (https://github.com/mozdevs/cssremedy/issues/14)
+2. Add `vertical-align: middle` to align replaced elements more sensibly by default. (https://github.com/jensimmons/cssremedy/issues/14#issuecomment-634934210)
+   This can trigger a poorly considered lint error in some tools but is included by design.
+*/
+
+      img,
+      svg,
+      video,
+      canvas,
+      audio,
+      iframe,
+      embed,
+      object {
+        display: block; /* 1 */
+        vertical-align: middle; /* 2 */
+      }
+
+      /*
+Constrain images and videos to the parent width and preserve their intrinsic aspect ratio. (https://github.com/mozdevs/cssremedy/issues/14)
+*/
+
+      img,
+      video {
+        max-width: 100%;
+        height: auto;
+      }
+
+      *,
+      ::before,
+      ::after {
+        --tw-border-spacing-x: 0;
+        --tw-border-spacing-y: 0;
+        --tw-translate-x: 0;
+        --tw-translate-y: 0;
+        --tw-rotate: 0;
+        --tw-skew-x: 0;
+        --tw-skew-y: 0;
+        --tw-scale-x: 1;
+        --tw-scale-y: 1;
+        --tw-pan-x: ;
+        --tw-pan-y: ;
+        --tw-pinch-zoom: ;
+        --tw-scroll-snap-strictness: proximity;
+        --tw-ordinal: ;
+        --tw-slashed-zero: ;
+        --tw-numeric-figure: ;
+        --tw-numeric-spacing: ;
+        --tw-numeric-fraction: ;
+        --tw-ring-inset: ;
+        --tw-ring-offset-width: 0px;
+        --tw-ring-offset-color: #fff;
+        --tw-ring-color: rgb(59 130 246 / 0.5);
+        --tw-ring-offset-shadow: 0 0 #0000;
+        --tw-ring-shadow: 0 0 #0000;
+        --tw-shadow: 0 0 #0000;
+        --tw-shadow-colored: 0 0 #0000;
+        --tw-blur: ;
+        --tw-brightness: ;
+        --tw-contrast: ;
+        --tw-grayscale: ;
+        --tw-hue-rotate: ;
+        --tw-invert: ;
+        --tw-saturate: ;
+        --tw-sepia: ;
+        --tw-drop-shadow: ;
+        --tw-backdrop-blur: ;
+        --tw-backdrop-brightness: ;
+        --tw-backdrop-contrast: ;
+        --tw-backdrop-grayscale: ;
+        --tw-backdrop-hue-rotate: ;
+        --tw-backdrop-invert: ;
+        --tw-backdrop-opacity: ;
+        --tw-backdrop-saturate: ;
+        --tw-backdrop-sepia: ;
+      }
+
+      ::backdrop {
+        --tw-border-spacing-x: 0;
+        --tw-border-spacing-y: 0;
+        --tw-translate-x: 0;
+        --tw-translate-y: 0;
+        --tw-rotate: 0;
+        --tw-skew-x: 0;
+        --tw-skew-y: 0;
+        --tw-scale-x: 1;
+        --tw-scale-y: 1;
+        --tw-pan-x: ;
+        --tw-pan-y: ;
+        --tw-pinch-zoom: ;
+        --tw-scroll-snap-strictness: proximity;
+        --tw-ordinal: ;
+        --tw-slashed-zero: ;
+        --tw-numeric-figure: ;
+        --tw-numeric-spacing: ;
+        --tw-numeric-fraction: ;
+        --tw-ring-inset: ;
+        --tw-ring-offset-width: 0px;
+        --tw-ring-offset-color: #fff;
+        --tw-ring-color: rgb(59 130 246 / 0.5);
+        --tw-ring-offset-shadow: 0 0 #0000;
+        --tw-ring-shadow: 0 0 #0000;
+        --tw-shadow: 0 0 #0000;
+        --tw-shadow-colored: 0 0 #0000;
+        --tw-blur: ;
+        --tw-brightness: ;
+        --tw-contrast: ;
+        --tw-grayscale: ;
+        --tw-hue-rotate: ;
+        --tw-invert: ;
+        --tw-saturate: ;
+        --tw-sepia: ;
+        --tw-drop-shadow: ;
+        --tw-backdrop-blur: ;
+        --tw-backdrop-brightness: ;
+        --tw-backdrop-contrast: ;
+        --tw-backdrop-grayscale: ;
+        --tw-backdrop-hue-rotate: ;
+        --tw-backdrop-invert: ;
+        --tw-backdrop-opacity: ;
+        --tw-backdrop-saturate: ;
+        --tw-backdrop-sepia: ;
+      }
+      .container {
+        width: 100%;
+      }
+      @media (min-width: 640px) {
+        .container {
+          max-width: 640px;
+        }
+      }
+      @media (min-width: 768px) {
+        .container {
+          max-width: 768px;
+        }
+      }
+      @media (min-width: 1024px) {
+        .container {
+          max-width: 1024px;
+        }
+      }
+      @media (min-width: 1280px) {
+        .container {
+          max-width: 1280px;
+        }
+      }
+      @media (min-width: 1536px) {
+        .container {
+          max-width: 1536px;
+        }
+      }
+      .relative {
+        position: relative;
+      }
+      .mx-auto {
+        margin-left: auto;
+        margin-right: auto;
+      }
+      .mb-16 {
+        margin-bottom: 4rem;
+      }
+      .mt-8 {
+        margin-top: 2rem;
+      }
+      .mb-4 {
+        margin-bottom: 1rem;
+      }
+      .mb-0 {
+        margin-bottom: 0px;
+      }
+      .mb-6 {
+        margin-bottom: 1.5rem;
+      }
+      .block {
+        display: block;
+      }
+      .inline-block {
+        display: inline-block;
+      }
+      .flex {
+        display: flex;
+      }
+      .grid {
+        display: grid;
+      }
+      .min-h-\[150px\] {
+        min-height: 150px;
+      }
+      .w-full {
+        width: 100%;
+      }
+      .w-1\/5 {
+        width: 20%;
+      }
+      .max-w-\[80\%\] {
+        max-width: 80%;
+      }
+      .max-w-\[300px\] {
+        max-width: 300px;
+      }
+      .transform {
+        transform: translate(var(--tw-translate-x), var(--tw-translate-y))
+          rotate(var(--tw-rotate)) skewX(var(--tw-skew-x))
+          skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x))
+          scaleY(var(--tw-scale-y));
+      }
+      .grid-cols-1 {
+        grid-template-columns: repeat(1, minmax(0, 1fr));
+      }
+      .grid-cols-2 {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+      .flex-col {
+        flex-direction: column;
+      }
+      .items-center {
+        align-items: center;
+      }
+      .justify-center {
+        justify-content: center;
+      }
+      .justify-between {
+        justify-content: space-between;
+      }
+      .gap-4 {
+        gap: 1rem;
+      }
+      .gap-16 {
+        gap: 4rem;
+      }
+      .rounded-lg {
+        border-radius: 0.5rem;
+      }
+      .rounded-full {
+        border-radius: 9999px;
+      }
+      .border {
+        border-width: 1px;
+      }
+      .border-b {
+        border-bottom-width: 1px;
+      }
+      .border-solid {
+        border-style: solid;
+      }
+      .bg-green-50 {
+        --tw-bg-opacity: 1;
+        background-color: rgb(240 253 244 / var(--tw-bg-opacity));
+      }
+      .bg-red-50 {
+        --tw-bg-opacity: 1;
+        background-color: rgb(254 242 242 / var(--tw-bg-opacity));
+      }
+      .bg-purple-50 {
+        --tw-bg-opacity: 1;
+        background-color: rgb(250 245 255 / var(--tw-bg-opacity));
+      }
+      .bg-blue-50 {
+        --tw-bg-opacity: 1;
+        background-color: rgb(239 246 255 / var(--tw-bg-opacity));
+      }
+      .bg-orange-50 {
+        --tw-bg-opacity: 1;
+        background-color: rgb(255 247 237 / var(--tw-bg-opacity));
+      }
+      .bg-gray-50 {
+        --tw-bg-opacity: 1;
+        background-color: rgb(249 250 251 / var(--tw-bg-opacity));
+      }
+      .bg-gray-100 {
+        --tw-bg-opacity: 1;
+        background-color: rgb(243 244 246 / var(--tw-bg-opacity));
+      }
+      .p-4 {
+        padding: 1rem;
+      }
+      .py-8 {
+        padding-top: 2rem;
+        padding-bottom: 2rem;
+      }
+      .px-4 {
+        padding-left: 1rem;
+        padding-right: 1rem;
+      }
+      .pb-4 {
+        padding-bottom: 1rem;
+      }
+      .pb-6 {
+        padding-bottom: 1.5rem;
+      }
+      .text-center {
+        text-align: center;
+      }
+      .text-4xl {
+        font-size: 2.25rem;
+        line-height: 2.5rem;
+      }
+      .text-2xl {
+        font-size: 1.5rem;
+        line-height: 2rem;
+      }
+      .text-base {
+        font-size: 1rem;
+        line-height: 1.5rem;
+      }
+      .text-gray-600 {
+        --tw-text-opacity: 1;
+        color: rgb(75 85 99 / var(--tw-text-opacity));
+      }
+      .text-gray-900 {
+        --tw-text-opacity: 1;
+        color: rgb(17 24 39 / var(--tw-text-opacity));
+      }
+      .hover\:border-sky-300:hover {
+        --tw-border-opacity: 1;
+        border-color: rgb(125 211 252 / var(--tw-border-opacity));
+      }
+      .hover\:no-underline:hover {
+        -webkit-text-decoration-line: none;
+        text-decoration-line: none;
+      }
+      @media (prefers-color-scheme: dark) {
+        .dark\:border-none {
+          border-style: none;
+        }
+
+        .dark\:border-gray-800 {
+          --tw-border-opacity: 1;
+          border-color: rgb(31 41 55 / var(--tw-border-opacity));
+        }
+
+        .dark\:bg-gray-800 {
+          --tw-bg-opacity: 1;
+          background-color: rgb(31 41 55 / var(--tw-bg-opacity));
+        }
+
+        .dark\:bg-pink-700 {
+          --tw-bg-opacity: 1;
+          background-color: rgb(190 24 93 / var(--tw-bg-opacity));
+        }
+
+        .dark\:bg-cyan-700 {
+          --tw-bg-opacity: 1;
+          background-color: rgb(14 116 144 / var(--tw-bg-opacity));
+        }
+
+        .dark\:bg-white {
+          --tw-bg-opacity: 1;
+          background-color: rgb(255 255 255 / var(--tw-bg-opacity));
+        }
+
+        .dark\:bg-emerald-700 {
+          --tw-bg-opacity: 1;
+          background-color: rgb(4 120 87 / var(--tw-bg-opacity));
+        }
+
+        .dark\:bg-indigo-700 {
+          --tw-bg-opacity: 1;
+          background-color: rgb(67 56 202 / var(--tw-bg-opacity));
+        }
+
+        .dark\:bg-orange-700 {
+          --tw-bg-opacity: 1;
+          background-color: rgb(194 65 12 / var(--tw-bg-opacity));
+        }
+
+        .dark\:text-white {
+          --tw-text-opacity: 1;
+          color: rgb(255 255 255 / var(--tw-text-opacity));
+        }
+
+        .dark\:no-underline {
+          -webkit-text-decoration-line: none;
+          text-decoration-line: none;
+        }
+
+        .dark\:hover\:border-white:hover {
+          --tw-border-opacity: 1;
+          border-color: rgb(255 255 255 / var(--tw-border-opacity));
+        }
+      }
+      @media (min-width: 640px) {
+        .sm\:col-span-2 {
+          grid-column: span 2 / span 2;
+        }
+
+        .sm\:min-h-\[200px\] {
+          min-height: 200px;
+        }
+
+        .sm\:w-1\/3 {
+          width: 33.333333%;
+        }
+      }
+      @media (min-width: 768px) {
+        .md\:grid-cols-2 {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        .md\:px-8 {
+          padding-left: 2rem;
+          padding-right: 2rem;
+        }
+
+        .md\:py-16 {
+          padding-top: 4rem;
+          padding-bottom: 4rem;
+        }
+
+        .md\:text-5xl {
+          font-size: 3rem;
+          line-height: 1;
+        }
+      }
+      @media (min-width: 1024px) {
+        .lg\:col-span-1 {
+          grid-column: span 1 / span 1;
+        }
+
+        .lg\:min-h-\[200px\] {
+          min-height: 200px;
+        }
+
+        .lg\:min-h-\[250px\] {
+          min-height: 250px;
+        }
+
+        .lg\:min-h-\[300px\] {
+          min-height: 300px;
+        }
+
+        .lg\:max-w-full {
+          max-width: 100%;
+        }
+
+        .lg\:grid-cols-5 {
+          grid-template-columns: repeat(5, minmax(0, 1fr));
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header
+      class="border-grey-100 flex items-center justify-between border-b border-solid p-4 dark:border-none dark:bg-gray-800 md:px-8"
+    >
+      <div>
+        <svg
+          class="c-header__logo c-logo c-logo--animate"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 508.16 319.23"
+          width="80"
+        >
+          <polygon
+            points="145.84 76.2 111.84 63.2 124.84 86.2 128.84 114.2 118.84 137.2 81.84 145.2 51.84 133.2 42.84 117.2 31.84 92.2 10.84 92.2 16.84 71.2 48.84 35.2 86.84 12.2 127.84 10.2 170.84 25.2 180.84 37.2 170.84 59.2 167.84 79.2 159.84 93.2 145.84 76.2"
+            class="c-logo__horn c-logo__horn--left"
+          />
+
+          <polygon
+            points="324.84 36.2 350.84 19.2 385.84 9.2 422.84 13.2 456.84 33.2 474.84 56.2 495.84 74.2 500.84 98.2 471.84 91.2 469.84 110.2 458.84 126.2 440.84 140.2 423.84 145.2 398.84 145.2 382.84 132.2 378.84 103.2 380.84 82.2 386.84 74.2 374.84 66.2 361.84 80.2 351.84 94.2 337.84 74.2 324.84 36.2"
+            class="c-logo__horn c-logo__horn--right"
+          />
+
+          <polygon
+            points="162.84 106.2 192.84 95.2 219.51 108.2 236.17 143.53 234.84 168.2 222.84 215.53 225.51 227.53 258.17 246.86 286.17 222.2 274.17 194.2 266.84 145.53 276.84 115.53 292.84 97.53 329.51 96.2 348.84 112.86 348.84 152.86 318.17 202.86 288.84 232.86 254.17 254.2 226.17 236.2 185.51 196.86 156.17 129.53 162.84 106.2"
+            class="c-logo__eye-sockets"
+          />
+
+          <path
+            d="M213.16,150.31a13,13,0,1,0-13,13A13,13,0,0,0,213.16,150.31Z"
+            class="c-logo__eye c-logo__eye--left"
+          />
+
+          <path
+            d="M318.26,155.76A6.51,6.51,0,1,0,329.38,149a23.05,23.05,0,0,0-39,0,6.51,6.51,0,0,0,11.13,6.76,10,10,0,0,1,16.77,0Z"
+            class="c-logo__eye c-logo__eye--right"
+          />
+
+          <polygon
+            points="167.84 79.2 183.51 67.53 203.51 62.86 238.84 70.86 259.51 82.86 290.84 63.53 325.51 69.53 338.34 76.7 346.34 101.7 316.84 96.2 283.84 112.2 270.84 155.7 279.34 202.7 288.84 224.7 314.34 205.2 341.84 168.2 343.84 222.2 320.84 255.2 299.84 281.2 280.84 300.2 237.34 309.7 216.34 293.2 202.84 269.2 183.34 258.2 164.84 211.7 165.84 173.2 193.34 203.2 216.34 222.7 228.84 191.2 234.84 132.2 219.84 103.2 184.34 93.7 159.84 104.2 167.84 79.2"
+            class="c-logo__face-bg"
+          />
+
+          <polygon
+            points="217.51 225.53 248.17 248.2 290.84 226.2 303.51 257.53 294.84 292.86 270.84 309.53 237.34 309.7 211.51 288.86 200.84 259.2 217.51 225.53"
+            class="c-logo__mouth"
+          />
+
+          <polygon
+            points="170.17 63.53 188.84 32.86 226.17 27.53 260.84 16.86 290.84 30.86 319.51 34.2 337.51 57.53 338.34 76.7 312.84 66.2 284.17 67.53 262.84 76.86 251.51 80.2 229.51 68.86 199.51 66.86 176.84 74.86 170.17 63.53"
+            class="c-logo__hair"
+          />
+
+          <path
+            d="M479.06,50.53c-6.4-11.68-38.68-62.45-108.71-47.95-22.42,4.64-37.41,14.77-47,24a45.73,45.73,0,0,0-11.89-5.22,44.82,44.82,0,0,0-24,.2,53.82,53.82,0,0,0-66.91,0,44.82,44.82,0,0,0-24-.2,46,46,0,0,0-11.9,5.22c-9.53-9.23-24.53-19.36-46.94-24-70-14.49-102.31,36.27-108.7,48C10.81,59.22,0,76.37,0,98.94a8.36,8.36,0,0,0,12.72,7.14,67.59,67.59,0,0,1,15.57-6.26c3.44,17.94,17.1,54.28,71.43,54.28V154c.48,0,1,.08,1.45.08,4.89,0,10.11-1.51,16-4.6,13.2-7,21.49-20.94,22.15-37.35.57-14-4.32-27.58-13.48-38.83a31.2,31.2,0,0,1,9.84,5.76c12,10.59,12.27,28.26,12.28,28.43h.19c-.19,1.11-.35,2.22-.48,3.34a92.88,92.88,0,0,0,.36,24c0,1.36.08,2.23.11,2.42l.25,0a112,112,0,0,0,8.43,27.19c-.55,2.52-12.5,59.22,17.79,90.48a127,127,0,0,0,22.06,18.47,58.87,58.87,0,0,0,114.82,0,126.27,126.27,0,0,0,22.07-18.47c30.29-31.25,18.34-87.94,17.78-90.48a111.64,111.64,0,0,0,8.42-27.08l.3,0c0-.22.11-1.29.14-2.94a92.9,92.9,0,0,0,.3-23.61c-.12-1.14-.3-2.26-.48-3.37h.18c0-.17.33-17.75,12.19-28.31a31.19,31.19,0,0,1,9.95-5.86c-9.16,11.26-14.05,24.84-13.5,38.84.67,16.41,8.95,30.37,22.15,37.35,5.88,3.09,11.12,4.6,16,4.6h0c.5,0,1,0,1.45-.08v.08c54.33,0,68-36.34,71.43-54.28a66.6,66.6,0,0,1,15.57,6.26,8.37,8.37,0,0,0,12.72-7.14C508.16,76.37,497.34,59.22,479.06,50.53ZM296.24,260.34c0,1.1-.06,2.18-.14,3.25-17,12.05-28.89,4.33-33.65-.14v-7.24a295.37,295.37,0,0,0,27-18.78A41.87,41.87,0,0,1,296.24,260.34ZM335.12,89.7c-20-8.86-44.79-3-58.2,14.49-30.05,39.11-7.34,96.78,3.42,119.1a286.36,286.36,0,0,1-26.26,18.4,285.93,285.93,0,0,1-26-18.2c10.72-22.17,33.65-80.08,3.52-119.3C218.09,86.56,193,80.73,172.86,90c7.83-11.12,20.13-18.07,34-18.07a54.11,54.11,0,0,1,40.57,18.23,8.36,8.36,0,0,0,13.19,0,54.28,54.28,0,0,1,40.57-18.23A41.43,41.43,0,0,1,335.12,89.7ZM177.55,106.33c13.29-7.56,31.59-3.94,40.82,8,22.76,29.66,6.22,76.3-3.58,98-22-19.63-45.06-47-50-78.44C164.78,128.39,165.91,113,177.55,106.33Zm34.37,154a42.07,42.07,0,0,1,6.78-22.91,290.8,290.8,0,0,0,27,18.78v7.34c-4.58,4.27-16.51,12.18-33.66,0C212,262.48,211.92,261.42,211.92,260.34Zm81.75-48.22c-9.84-21.77-26.19-68.19-3.47-97.74,9.2-12,27.51-15.61,40.8-8,11.21,6.37,12.43,21,12.46,26.9-4.44,29.17-24.53,54.57-42.42,72C298.59,207.62,296.12,209.91,293.67,212.12ZM201.12,37.49c7.16-2,14-.39,18.42,1.31A8.39,8.39,0,0,0,228.32,37l.18-.17a37.1,37.1,0,0,1,51.07-.07c.09.08.16.17.26.25a8.36,8.36,0,0,0,8.77,1.77c4.45-1.7,11.26-3.3,18.43-1.31a29.25,29.25,0,0,1,17.79,14.12,30.84,30.84,0,0,1,3.5,10.26,57.5,57.5,0,0,0-27.08-6.72,71.21,71.21,0,0,0-47.16,17.92,71.27,71.27,0,0,0-47.17-17.92,57.5,57.5,0,0,0-27.08,6.72,30.18,30.18,0,0,1,3.5-10.26A29.27,29.27,0,0,1,201.12,37.49Zm-150,76.75A52.76,52.76,0,0,1,45,98.52a27.33,27.33,0,0,1,14.77,6.69c6.32,5.59,10.23,14.21,14,22.56,1,2.1,1.94,4.26,3,6.39C65.43,130.55,56.83,123.89,51.09,114.24Zm71.49-2.76c-.41,10.38-5.36,19-13.24,23.21-4.18,2.21-6.75,2.68-8.17,2.68-4.17,0-7-5.3-12.12-16.53-4.31-9.48-9.19-20.23-18.2-28.18-8.43-7.44-18.74-11.22-30.64-11.22A68.42,68.42,0,0,0,18.75,85.2C26.08,62.88,51.2,60.9,59.8,60.9A76.68,76.68,0,0,1,99.86,72.44C114.7,81.87,123.2,96.46,122.58,111.48Zm24.31-44.81c-11.11-9.9-26.27-14-45.09-12.34a94.44,94.44,0,0,0-42-10.17c-2.16,0-4.27.09-6.34.23C66.27,29.4,91.73,10.14,134.41,19c18,3.74,30.17,11.62,38,18.91a48.33,48.33,0,0,0-3.66,5.58,46.57,46.57,0,0,0-5.19,31.28,59.58,59.58,0,0,0-5.3,6.88A49.67,49.67,0,0,0,146.89,66.67Zm39.73,176.6c-14.09-14.53-16.33-37.69-15.74-54.48a205.26,205.26,0,0,0,24.82,28.69c3.34,3.25,6.7,6.33,10,9.24a58.38,58.38,0,0,0-9.93,25.17C192.76,249.31,189.69,246.45,186.62,243.27Zm67.46,59.23a42.13,42.13,0,0,1-33.6-16.72,39.11,39.11,0,0,0,8.87,1c10.78,0,19.34-4.68,24.75-8.78,5.43,4.1,14,8.78,24.78,8.78a38.62,38.62,0,0,0,8.76-1A42.11,42.11,0,0,1,254.08,302.5Zm67.45-59.23c-3.08,3.18-6.14,6-9.16,8.62a58.25,58.25,0,0,0-9.94-25.17c3.31-2.91,6.67-6,10-9.24a205.26,205.26,0,0,0,24.82-28.69C337.85,205.58,335.61,228.74,321.53,243.27Zm39.72-176.6a49.59,49.59,0,0,0-11.3,15,63.12,63.12,0,0,0-5.3-6.88,47.1,47.1,0,0,0-8.86-36.86c7.79-7.29,19.91-15.17,38-18.91,42.68-8.83,68.14,10.43,80.95,25.42-2.07-.14-4.18-.23-6.34-.23a94.52,94.52,0,0,0-42,10.17C387.53,52.63,372.38,56.77,361.25,66.67Zm70.15,67.41c1-2.11,2-4.23,3-6.31,3.78-8.35,7.7-17,14-22.56a27.23,27.23,0,0,1,14.89-6.71C461.05,109.14,454,126.81,431.4,134.08Zm36.54-52.64c-11.9,0-22.21,3.78-30.63,11.22-9,8-13.9,18.7-18.2,28.18-5.1,11.24-7.95,16.53-12.12,16.53-1.43,0-4-.47-8.18-2.68-7.87-4.16-12.84-12.83-13.24-23.21-.61-15,7.89-29.61,22.72-39A76.72,76.72,0,0,1,448.36,60.9c8.59,0,33.71,2,41,24.3A68.42,68.42,0,0,0,467.94,81.44Z"
+            class="c-logo__face"
+          />
+        </svg>
+      </div>
+    </header>
+    <section class="py-8 md:py-16 dark:bg-gray-800">
+      <h1
+        class="mx-auto mb-16 max-w-[80%] text-center text-4xl dark:text-white md:text-5xl"
+      >
+        Hello, I'm Shane Prendergast.
+        <span
+          class="mt-8 block font-gtreg text-2xl text-gray-600 dark:text-white"
+        >
+          I make things online.
+        </span>
+      </h1>
+
+      <div
+        class="container mx-auto grid items-center gap-4 dark:text-white md:grid-cols-2 lg:grid-cols-5"
+      >
+        <div class="relative">
+          <a
+            href="https://chasingchallenges.webknit.co.uk/"
+            class="border-grey-100 dark:hover-white relative flex min-h-[150px] flex-col items-center justify-center rounded-lg border border-solid bg-green-50 px-4 text-gray-900 hover:border-sky-300 hover:no-underline dark:border-gray-800 dark:bg-pink-700 dark:no-underline dark:hover:border-white sm:min-h-[200px] lg:min-h-[200px]"
+          >
+            <div class="text-center w-full">
+              <svg
+                class="c-ql__icon mx-auto mb-4 w-1/5 sm:w-1/3"
+                data-name="Layer 1"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 167.52 109.22"
+              >
+                <path
+                  data-v-523492f0=""
+                  d="M37.18 10h44.55a61 61 0 018.88-5.84A75.85 75.85 0 0199.36 0H37.18a5 5 0 100 10z"
+                  fill="#a798c9"
+                ></path>
+
+                <path
+                  data-v-523492f0=""
+                  d="M65.68 76.55c-.27-.7-.52-1.4-.77-2.11H21a5 5 0 100 10h48.45a62.12 62.12 0 01-3.77-7.89zM21 34.78h43.43c.36-1.09.75-2.16 1.18-3.21a60.32 60.32 0 013.25-6.75H21a5 5 0 100 10z"
+                  fill="#6dc4cb"
+                ></path>
+
+                <path
+                  data-v-523492f0=""
+                  d="M90.85 105a65 65 0 01-8.44-5.75H37.18a5 5 0 100 9.95H99.4a70.15 70.15 0 01-8.55-4.2z"
+                  fill="#a798c9"
+                ></path>
+
+                <path
+                  data-v-523492f0=""
+                  d="M61.56 53.83c0-1.43 0-2.82.11-4.2H4.2c-2.32 0-4.2 2.23-4.2 5s1.88 5 4.2 5h57.56c-.13-1.93-.2-3.85-.2-5.8z"
+                  fill="#ed6a60"
+                ></path>
+
+                <path
+                  data-v-523492f0=""
+                  d="M154.41 75q-2 0-7 2.91l-2.62 1.9a22.61 22.61 0 01-5.75 2.33 30.61 30.61 0 01-8.52 1.16q-9.61 0-18.5-6.41a25.12 25.12 0 01-7.42-9.17 29 29 0 01-2.92-13.18 29 29 0 012.92-13.18 24.57 24.57 0 017.28-9q9.18-6.55 18.64-6.55 10.18 0 16.31 4.95c3.2 2.14 5.68 3.2 7.43 3.2q4.5 0 10.19-7.86a13.93 13.93 0 003.07-8.1c0-2.58-1.26-4.88-3.79-6.92q-1.46-1-4.08-2.62l-3.49-2a48.91 48.91 0 00-10.7-4.3A48.69 48.69 0 00131.55 0q-14.42 0-28.69 7.86A55.37 55.37 0 0089.39 18a47.27 47.27 0 00-9.69 15.28 54 54 0 00-3.78 20.6 56.21 56.21 0 003.86 21.05 48 48 0 009.83 15.87 60.25 60.25 0 0013.47 10.49 59.13 59.13 0 0014.56 6.11 55.57 55.57 0 0014 1.82 47.72 47.72 0 0014.36-2.33q7.42-2.33 9.83-3.78l5-3.06a22.93 22.93 0 004.59-3.64 7.06 7.06 0 002-5.1c0-2-1.07-4.75-3.2-8.15q-5.3-8.16-9.81-8.16z"
+                  fill="#3d5afe"
+                ></path>
+              </svg>
+              <h2 class="mb-0 font-gtreg text-base">Chasing Challenges</h2>
+            </div>
+          </a>
+        </div>
+        <div class="">
+          <a
+            href="http://rideforthechild.co.uk/"
+            class="border-grey-100 dark:hover-white relative flex min-h-[150px] flex-col items-center justify-center rounded-lg border border-solid bg-red-50 px-4 text-gray-900 hover:border-sky-300 hover:no-underline dark:border-gray-800 dark:bg-cyan-700 dark:no-underline dark:hover:border-white sm:min-h-[200px] lg:min-h-[250px]"
+          >
+            <div class="text-center w-full">
+              <div
+                class="mb-4 inline-block w-1/5 max-w-[300px] rounded-full dark:bg-white sm:w-1/3 lg:max-w-full"
+              >
+                <img
+                  src="http://rideforthechild.co.uk/wp-content/themes/RFTC/img/logo.svg"
+                  alt="Ride for the child loog"
+                  class=""
+                />
+              </div>
+              <h2 class="mb-0 font-gtreg text-base">Ride for the Child</h2>
+            </div>
+          </a>
+        </div>
+        <div class="">
+          <a
+            href="https://black-diamond.vercel.app/"
+            class="border-grey-100 dark:hover-white relative flex min-h-[150px] flex-col items-center justify-center rounded-lg border border-solid bg-purple-50 px-4 text-gray-900 hover:border-sky-300 hover:no-underline dark:border-gray-800 dark:bg-emerald-700 dark:no-underline dark:hover:border-white sm:min-h-[200px] lg:min-h-[300px]"
+          >
+            <div class="text-center w-full">
+              <svg
+                stroke="currentColor"
+                fill="#000000"
+                strokeWidth="0"
+                viewBox="0 0 16 16"
+                focusable="false"
+                class="mb-4 inline-block w-1/5 sm:w-1/3"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M2.45 7.4 7.2 1.067a1 1 0 0 1 1.6 0L13.55 7.4a1 1 0 0 1 0 1.2L8.8 14.933a1 1 0 0 1-1.6 0L2.45 8.6a1 1 0 0 1 0-1.2z"
+                ></path>
+              </svg>
+              <h2 class="mb-0 font-gtreg text-base">Black Diamond</h2>
+            </div>
+          </a>
+        </div>
+        <div class="">
+          <a
+            href="https://memoryup.webknit.co.uk/"
+            class="border-grey-100 dark:hover-white relative flex min-h-[150px] flex-col items-center justify-center rounded-lg border border-solid bg-blue-50 px-4 text-gray-900 hover:border-sky-300 hover:no-underline dark:border-gray-800 dark:bg-indigo-700 dark:no-underline dark:hover:border-white sm:min-h-[200px] lg:min-h-[250px]"
+          >
+            <div class="text-center w-full">
+              <svg
+                class="mb-4 inline-block w-1/5 sm:w-1/3"
+                data-name="Layer 1"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 172.17 122.75"
+              >
+                <path
+                  d="M112.42 7.7a2.69 2.69 0 00-5.32 0v28.38a2.69 2.69 0 005.32 0z"
+                  fill="#00ade1"
+                ></path>
+                <path
+                  d="M117.2 8.4v28.84a2.49 2.49 0 002.66 2.28h7.44v33.42a2.69 2.69 0 005.32 0v-35.7A2.49 2.49 0 00130 35h-7.44V8.4a2.69 2.69 0 00-5.32 0z"
+                  fill="#fb6590"
+                ></path>
+                <ellipse
+                  cx="109.72"
+                  cy="103.42"
+                  rx="2.66"
+                  ry="2.29"
+                  fill="#00ade1"
+                ></ellipse>
+                <ellipse
+                  cx="100.95"
+                  cy="109.43"
+                  rx="2.66"
+                  ry="2.29"
+                  fill="#fb6590"
+                ></ellipse>
+                <path
+                  d="M112.42 42.75a2.69 2.69 0 00-5.32 0v28.38a2.69 2.69 0 005.32 0z"
+                  fill="#339b74"
+                ></path>
+                <ellipse
+                  cx="109.76"
+                  cy="78.44"
+                  rx="2.66"
+                  ry="2.29"
+                  fill="#339b74"
+                ></ellipse>
+                <path
+                  d="M109.76 82.55a2.49 2.49 0 00-2.66 2.29v10.52a2.69 2.69 0 005.32 0V84.84a2.49 2.49 0 00-2.66-2.29z"
+                  fill="#fed800"
+                ></path>
+                <path
+                  d="M132.62 78.82a2.69 2.69 0 00-5.32 0v29.76a2.69 2.69 0 005.32 0z"
+                  fill="#00db82"
+                ></path>
+                <path
+                  d="M98.28 102.76a2.69 2.69 0 005.32 0V92.23a2.69 2.69 0 00-5.32 0z"
+                  fill="#339b74"
+                ></path>
+                <ellipse
+                  cx="129.92"
+                  cy="114.87"
+                  rx="2.66"
+                  ry="2.29"
+                  fill="none"
+                ></ellipse>
+                <ellipse
+                  cx="140.25"
+                  cy="74.56"
+                  rx="2.66"
+                  ry="2.29"
+                  fill="#fed800"
+                ></ellipse>
+                <ellipse
+                  cx="130.14"
+                  cy="114.71"
+                  rx="2.66"
+                  ry="2.29"
+                  fill="#fed800"
+                ></ellipse>
+                <ellipse
+                  cx="140.25"
+                  cy="98.82"
+                  rx="2.66"
+                  ry="2.29"
+                  fill="#339b74"
+                ></ellipse>
+                <path
+                  d="M142.91 38.87a2.69 2.69 0 00-5.32 0v28.38a2.69 2.69 0 005.32 0z"
+                  fill="#339b74"
+                ></path>
+                <path
+                  d="M142.91 81a2.69 2.69 0 00-5.32 0v10.49a2.69 2.69 0 005.32 0z"
+                  fill="#00ade1"
+                ></path>
+                <ellipse
+                  cx="150.35"
+                  cy="82.34"
+                  rx="2.66"
+                  ry="2.29"
+                  fill="#fed800"
+                ></ellipse>
+                <ellipse
+                  cx="150.35"
+                  cy="75.93"
+                  rx="2.66"
+                  ry="2.29"
+                  fill="#00ade1"
+                ></ellipse>
+                <path
+                  d="M153 98.75V88.22a2.68 2.68 0 00-5.31 0v10.53a2.5 2.5 0 002.66 2.29 3 3 0 001.13-.23 2.29 2.29 0 001.52-2.06z"
+                  fill="#339b74"
+                ></path>
+                <path
+                  d="M152.92 33.24V22.71a2.69 2.69 0 00-5.32 0v10.53a2.5 2.5 0 002.66 2.29 3 3 0 001.13-.23 2.29 2.29 0 001.53-2.06z"
+                  fill="#fed800"
+                ></path>
+                <path
+                  d="M153 40.47a2.68 2.68 0 00-5.31 0v29.76a2.68 2.68 0 005.31 0z"
+                  fill="#00db82"
+                ></path>
+                <path
+                  d="M163.19 75.2a2.69 2.69 0 00-5.32 0v28.38a2.69 2.69 0 005.32 0z"
+                  fill="#fb6590"
+                ></path>
+                <ellipse
+                  cx="100.94"
+                  cy="86.28"
+                  rx="2.66"
+                  ry="2.29"
+                  fill="#339b74"
+                ></ellipse>
+                <path
+                  d="M98.28 79.87a2.69 2.69 0 005.32 0V50.12a2.69 2.69 0 00-5.32 0z"
+                  fill="#00db82"
+                ></path>
+                <path
+                  d="M100.94 44.17a2.5 2.5 0 002.66-2.29V22.65a2.69 2.69 0 00-5.32 0v19.23a2.5 2.5 0 002.66 2.29z"
+                  fill="#fb6590"
+                ></path>
+                <ellipse
+                  cx="119.86"
+                  cy="86.22"
+                  rx="2.66"
+                  ry="2.29"
+                  fill="#339b74"
+                ></ellipse>
+                <path
+                  d="M53 41.9a2.69 2.69 0 00-5.32 0v28.39a2.69 2.69 0 005.32 0z"
+                  fill="#339b74"
+                ></path>
+                <ellipse
+                  cx="40.2"
+                  cy="78.97"
+                  rx="2.66"
+                  ry="2.29"
+                  fill="#fed800"
+                ></ellipse>
+                <path
+                  d="M47.64 6.86v28.38a2.69 2.69 0 005.32 0V6.86a2.69 2.69 0 00-5.32 0z"
+                  fill="#fed800"
+                ></path>
+                <ellipse
+                  cx="50.3"
+                  cy="77.59"
+                  rx="2.66"
+                  ry="2.29"
+                  fill="#fed800"
+                ></ellipse>
+                <ellipse
+                  cx="40.2"
+                  cy="85.37"
+                  rx="2.66"
+                  ry="2.29"
+                  fill="#339b74"
+                ></ellipse>
+                <path
+                  d="M42.86 43.51a2.69 2.69 0 00-5.32 0v29.75a2.69 2.69 0 005.32 0z"
+                  fill="#00db82"
+                ></path>
+                <path
+                  d="M83.25 23a2.68 2.68 0 00-5.31 0v28.41a2.68 2.68 0 005.31 0z"
+                  fill="#00ade1"
+                ></path>
+                <ellipse
+                  cx="60.4"
+                  cy="39.6"
+                  rx="2.66"
+                  ry="2.29"
+                  fill="#339b74"
+                ></ellipse>
+                <path
+                  d="M117.2 102.62a2.69 2.69 0 005.32 0V92.1a2.69 2.69 0 00-5.32 0z"
+                  fill="#00ade1"
+                ></path>
+                <path
+                  d="M119.86 42.06a2.5 2.5 0 00-2.66 2.29V74.1a2.69 2.69 0 005.32 0V44.35a2.5 2.5 0 00-2.66-2.29z"
+                  fill="#fed800"
+                ></path>
+                <path
+                  d="M78.45 14.89a3 3 0 003.76 0 2.06 2.06 0 000-3.23l-9.84-8.47A2.92 2.92 0 0072 2.9l-.2-.09-.26-.12-.27-.07-.27-.06a3.65 3.65 0 00-.66 0 2.88 2.88 0 00-2 .66l-9.83 8.47a2.06 2.06 0 000 3.23 3 3 0 003.76 0l5.56-4.79V68a2.68 2.68 0 005.31 0V10.33z"
+                  fill="#f94359"
+                ></path>
+                <path
+                  d="M88 2.52V30a2.69 2.69 0 005.32 0V2.52a2.69 2.69 0 00-5.32 0z"
+                  fill="#00ade1"
+                ></path>
+                <path
+                  d="M60.4 43.72A2.49 2.49 0 0057.74 46v29.76a2.68 2.68 0 005.31 0V46a2.49 2.49 0 00-2.65-2.28z"
+                  fill="#339b74"
+                ></path>
+                <ellipse
+                  cx="80.59"
+                  cy="58.37"
+                  rx="2.66"
+                  ry="2.29"
+                  fill="#00ade1"
+                ></ellipse>
+                <ellipse
+                  cx="119.86"
+                  cy="79.81"
+                  rx="2.66"
+                  ry="2.29"
+                  fill="#339b74"
+                ></ellipse>
+                <path
+                  d="M63.05 23.12a2.68 2.68 0 00-5.31 0v10.53a2.68 2.68 0 005.31 0zM93.35 103.09V74.7a2.69 2.69 0 00-5.32 0v28.39a2.08 2.08 0 00.52 1.34l1.46.86a3 3 0 00.68.09 2.5 2.5 0 002.66-2.29zM158 66.65a2.68 2.68 0 005.31 0V36.89a2.68 2.68 0 00-5.31 0z"
+                  fill="#00ade1"
+                ></path>
+                <path
+                  d="M5.31 32.4a2.49 2.49 0 00-2.65-2.29A2.49 2.49 0 000 32.4v29.75a2.49 2.49 0 002.66 2.29 2.49 2.49 0 002.65-2.29z"
+                  fill="#00db82"
+                ></path>
+                <path
+                  d="M122.47 120.3v-10.53a2.69 2.69 0 00-5.32 0v10.53a2.49 2.49 0 002.66 2.28 3 3 0 001.13-.22 2.3 2.3 0 001.53-2.06z"
+                  fill="#339b74"
+                ></path>
+                <path
+                  d="M93.34 36.89V66a2.51 2.51 0 01-2.68 2.31h-7.5V102a2.71 2.71 0 01-5.36 0V66a2.51 2.51 0 012.68-2.3H88V36.89a2.71 2.71 0 015.36 0z"
+                  fill="#fb6590"
+                ></path>
+                <path
+                  d="M112.41 120.46v-10.53a2.68 2.68 0 00-5.31 0v10.53a2.5 2.5 0 002.66 2.29 3 3 0 001.13-.23 2.29 2.29 0 001.52-2.06z"
+                  fill="#00db82"
+                ></path>
+                <ellipse
+                  cx="169.51"
+                  cy="87.07"
+                  rx="2.66"
+                  ry="2.29"
+                  fill="#fb6590"
+                ></ellipse>
+                <path
+                  d="M18.83 13v27.44a2.5 2.5 0 002.66 2.29 2.5 2.5 0 002.66-2.29V13a2.5 2.5 0 00-2.66-2.29A2.5 2.5 0 0018.83 13z"
+                  fill="#fed800"
+                ></path>
+                <path
+                  d="M28.62 29a2.49 2.49 0 002.66 2.28A2.49 2.49 0 0033.93 29V18.47a2.49 2.49 0 00-2.65-2.29 2.49 2.49 0 00-2.66 2.29zM172.05 50.8a2.69 2.69 0 00-5.32 0v28.39a2.69 2.69 0 005.32 0zM142.69 116.86v-10.53a2.68 2.68 0 00-5.31 0v10.53a2.5 2.5 0 002.66 2.29 3 3 0 001.13-.23 2.29 2.29 0 001.52-2.06z"
+                  fill="#339b74"
+                ></path>
+                <path
+                  d="M100.77 1.49a2.49 2.49 0 00-2.65 2.29v10.53a2.68 2.68 0 005.31 0V3.78a2.49 2.49 0 00-2.66-2.29z"
+                  fill="#fed800"
+                ></path>
+                <path
+                  d="M132.79 2.29a2.69 2.69 0 00-5.32 0v28.38a2.69 2.69 0 005.32 0z"
+                  fill="#00db82"
+                ></path>
+                <path
+                  d="M139.91 33.84a2.5 2.5 0 002.66-2.29V12.32a2.68 2.68 0 00-5.31 0v19.23a2.5 2.5 0 002.65 2.29zM60.2 80.92a2.49 2.49 0 00-2.65 2.28v10.53a2.68 2.68 0 005.31 0V83.2a2.49 2.49 0 00-2.66-2.28z"
+                  fill="#fb6590"
+                ></path>
+                <path
+                  d="M53.08 95.22V84.69a2.69 2.69 0 00-5.32 0v10.53a2.5 2.5 0 002.66 2.29 3 3 0 001.13-.23 2.3 2.3 0 001.53-2.06z"
+                  fill="#00db82"
+                ></path>
+                <path
+                  d="M73.22 75.76a2.69 2.69 0 00-5.31 0v28.39a2.68 2.68 0 005.31 0zM8.23 67a2.5 2.5 0 002.66 2.29A2.5 2.5 0 0013.55 67V56.49a2.5 2.5 0 00-2.66-2.29 2.5 2.5 0 00-2.66 2.29z"
+                  fill="#339b74"
+                ></path>
+                <path
+                  d="M22 45.48h-8.09V26.65A2.71 2.71 0 0011 24.3a2.72 2.72 0 00-2.86 2.35V48A2.69 2.69 0 0011 50.44h8.06v19.09A2.7 2.7 0 0022 72a2.7 2.7 0 002.88-2.48V48A2.7 2.7 0 0022 45.48z"
+                  fill="#00ade1"
+                ></path>
+                <path
+                  d="M42.15 6a2.73 2.73 0 00-2-.88 2.43 2.43 0 00-2.59 2.23V26.1a2.4 2.4 0 000 .28v7.72H30.1a2.49 2.49 0 00-2.65 2.29V72.1a2.49 2.49 0 002.65 2.29 2.5 2.5 0 002.66-2.29V38.68h7.44a2.49 2.49 0 002.66-2.29V7.55A2.11 2.11 0 0042.15 6z"
+                  fill="#fb6590"
+                ></path>
+              </svg>
+
+              <h2 class="mb-0 font-gtreg text-base">MemoryUp</h2>
+            </div>
+          </a>
+        </div>
+        <div class="sm:col-span-2 lg:col-span-1">
+          <a
+            href="http://lifeinnumbers.webknit.co.uk/"
+            class="border-grey-100 border-grey-100 dark:hover-white relative flex min-h-[150px] flex-col items-center justify-center rounded-lg border border-solid bg-orange-50 px-4 text-gray-900 hover:border-sky-300 hover:no-underline dark:border-gray-800 dark:bg-orange-700 dark:no-underline dark:hover:border-white sm:min-h-[200px] lg:min-h-[200px]"
+          >
+            <div class="text-center w-full">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                data-name="Layer 1"
+                viewBox="0 0 224 224"
+                class="mb-4 inline-block w-1/5 rounded-full sm:w-1/3"
+              >
+                <circle
+                  cx="112"
+                  cy="112"
+                  r="110.5"
+                  fill="none"
+                  stroke="#231F20"
+                  strokeMiterlimit="10"
+                ></circle>
+                <path
+                  fill="none"
+                  stroke="#231F20"
+                  strokeMiterlimit="10"
+                  strokeWidth="2.45"
+                  d="M38.37 107.92c9.21 0 9.21 8.16 18.41 8.16s9.2-8.16 18.4-8.16 9.2 8.16 18.41 8.16 9.2-8.16 18.4-8.16 9.2 8.16 18.41 8.16 9.2-8.16 18.4-8.16 9.21 8.16 18.41 8.16 9.21-8.16 18.41-8.16"
+                ></path>
+                <path
+                  fill="none"
+                  stroke="#231F20"
+                  strokeMiterlimit="10"
+                  strokeWidth="3"
+                  d="M184.29 112A72.29 72.29 0 11112 39.71 72.28 72.28 0 01184.29 112z"
+                ></path>
+                <path
+                  fill="#231F20"
+                  d="M25.88 70.65a.3.3 0 01-.13-.41l.87-1.69a.32.32 0 01.41-.13l7.6 3.92L36.38 69a.31.31 0 01.41-.14l1.55.8a.31.31 0 01.13.41l-2.76 5.35a.3.3 0 01-.41.13zM32.92 58.5a.32.32 0 01-.08-.43l1.1-1.57a.31.31 0 01.42-.08l8.69 6.06a.31.31 0 01.07.43L42 64.48a.33.33 0 01-.43.08zM39.67 49.6a.31.31 0 010-.43l4.49-4.87a.3.3 0 01.43 0l1.28 1.18a.3.3 0 010 .43l-3 3.26 1.7 1.56L47 48a.31.31 0 01.43 0l1.28 1.18a.31.31 0 010 .43l-2.41 2.7L49.15 55a.31.31 0 010 .43l-1.28 1.39a.31.31 0 01-.43 0zM50.42 39a.31.31 0 010-.42l5.21-4.1a.31.31 0 01.43 0l1.07 1.37a.3.3 0 010 .43L53.65 39l1.23 1.56 2.86-2.26a.32.32 0 01.43 0l1.08 1.38a.3.3 0 010 .42l-2.87 2.26 1.34 1.69 3.48-2.74a.31.31 0 01.43.06l1.07 1.37a.29.29 0 010 .42l-5.2 4.1a.31.31 0 01-.5.04zM70.9 25.8a.31.31 0 01.15-.4l1.74-.8a.32.32 0 01.41.14l4.43 9.62a.3.3 0 01-.15.4l-1.74.81a.31.31 0 01-.4-.15zM81.31 21.26a.3.3 0 01.21-.36l.38-.11L89.72 25l-1.53-5.5a.3.3 0 01.21-.37l1.85-.53a.32.32 0 01.37.21l2.93 10.37a.31.31 0 01-.22.36l-.24.07a.53.53 0 01-.22 0l-7.81-4.4 1.62 5.74a.29.29 0 01-.21.37l-1.83.52a.32.32 0 01-.37-.21zM108.69 16.29A.31.31 0 01109 16h.39l6.29 6.24.09-5.67a.31.31 0 01.31-.3H118a.32.32 0 01.3.31l-.17 10.76a.31.31 0 01-.31.28h-.26a.37.37 0 01-.2-.09l-6.22-6.45-.1 6a.3.3 0 01-.31.3h-1.9a.32.32 0 01-.3-.31zM127.18 17.63a.31.31 0 01.36-.24l1.92.41a.31.31 0 01.24.36l-1.33 6.34a2 2 0 103.88.81l1.33-6.31a.31.31 0 01.36-.24l1.93.41a.32.32 0 01.23.36L134.75 26a4.56 4.56 0 01-8.93-1.87zM145.85 22.37a.3.3 0 01.36-.12l.24.1a.36.36 0 01.18.26l.66 7.82 6.15-4.87a.33.33 0 01.32 0l.23.1a.29.29 0 01.16.35l-2.61 10.58a.3.3 0 01-.42.2l-1.71-.79a.32.32 0 01-.17-.36l1.3-4.82-4.54 3.7a.38.38 0 01-.32 0l-.27-.11a.37.37 0 01-.18-.27l-.42-5.84-2.61 4.26a.3.3 0 01-.38.11l-1.77-.67a.29.29 0 01-.14-.44zM163 31.2a.3.3 0 01.42-.08l3.08 2.11a3.21 3.21 0 011.15 4.4 3.18 3.18 0 01-3 1A3 3 0 01165 42a3.27 3.27 0 01-4.63.57l-3.27-2.24a.3.3 0 01-.08-.42zm-1.61 9.34a1.16 1.16 0 001.61-.32 1.26 1.26 0 00-.45-1.66l-1.07-.73-1.29 1.88zm2.3-3.73a1.14 1.14 0 001.58-.31A1.09 1.09 0 00165 35l-1-.71-1.27 1.85zM175.69 40.8a.3.3 0 01.43 0l4.78 4.59a.3.3 0 010 .43l-1.21 1.25a.29.29 0 01-.43 0L176.07 44l-1.37 1.44 2.63 2.56a.31.31 0 010 .43l-1.21 1.26a.3.3 0 01-.43 0l-2.63-2.52-1.5 1.55 3.2 3.07a.3.3 0 010 .43l-1.21 1.26a.3.3 0 01-.43 0l-4.78-4.59a.3.3 0 010-.42zM186.41 52a.3.3 0 01.42.07l2.85 3.93a3.49 3.49 0 01-.7 4.87 3.54 3.54 0 01-4 0L183 65a.31.31 0 01-.54 0l-1.26-1.71a.29.29 0 010-.29l2.14-4.23-.65-.89-3.28 2.43a.33.33 0 01-.43-.07l-1.13-1.53a.29.29 0 01.06-.42zm-.7 6.59a1.28 1.28 0 001.75.22 1.23 1.23 0 00.26-1.7l-1.41-1.9-2 1.48zM187.12 69.76l1.53.07a.41.41 0 01.33.44 4.77 4.77 0 00.25 2.42 1 1 0 001.35.55c.6-.3.81-1 .7-2.2-.14-1.48 0-3.5 1.74-4.38 1.41-.71 3.4-.34 4.52 1.86a5.93 5.93 0 01.48 3.59c0 .22-.28.33-.41.32l-1.47-.17c-.21 0-.47-.21-.43-.39a5.09 5.09 0 00-.18-2.47.93.93 0 00-1.19-.53c-.53.27-.71.9-.59 2.26s.15 3.55-1.79 4.54a3.53 3.53 0 01-4.67-1.87 5.1 5.1 0 01-.53-3.77c.07-.21.1-.28.36-.27zM43.89 169.2a.21.21 0 01.36 0l.75.8a.24.24 0 010 .27l-2.62 4.19 4.9-2a.2.2 0 01.24.06l.15.16a.19.19 0 010 .24l-2.28 4.78 4.33-2.39a.25.25 0 01.27 0l.75.8a.2.2 0 01-.06.35l-7.42 3.88a.23.23 0 01-.27 0l-.13-.14a.2.2 0 010-.24l2.48-5.29-5.34 2.18a.21.21 0 01-.24-.06l-.13-.14a.23.23 0 010-.27zM53.46 178.74a.23.23 0 01.33 0l3.75 3.11a.24.24 0 010 .33l-.63.75a.22.22 0 01-.32 0l-2.73-2.27-1.26 1.52 2.28 1.89a.22.22 0 010 .32l-.63.77a.23.23 0 01-.32 0l-2.28-1.89-1.34 1.61 2.73 2.27a.22.22 0 010 .32l-.63.76a.23.23 0 01-.32 0l-3.76-3.12a.23.23 0 010-.32zM58.6 186.51a.19.19 0 01.18-.22 1.93 1.93 0 001.51-.72 1.59 1.59 0 01-.33-.16.8.8 0 01-.2-1.11.81.81 0 011.16-.16c.36.25.64.82.07 1.62a2.92 2.92 0 01-2.13 1.15c-.13 0-.2 0-.22-.17zM64.41 187a.24.24 0 01.31-.08l3 1.75a2.6 2.6 0 01.94 3.55 2.67 2.67 0 01-2.76 1.19l-.14 3.46a.23.23 0 01-.35.19l-1.09-.64a.22.22 0 01-.11-.19l.25-3.55-1.19-.68-1.56 2.64a.24.24 0 01-.31.08l-.95-.56a.24.24 0 01-.08-.32zm1.21 4.9a1.22 1.22 0 001.64-.45 1.19 1.19 0 00-.43-1.61l-1.68-1-1.22 2.05zM73.21 191.87a.22.22 0 01.3-.11l4.45 2a.24.24 0 01.11.31l-.4.89a.24.24 0 01-.31.12l-3.23-1.47-.81 1.79 2.7 1.22a.24.24 0 01.11.31l-.41.9a.23.23 0 01-.3.12l-2.7-1.23-.87 1.91 3.23 1.47a.23.23 0 01.12.3l-.41.9a.22.22 0 01-.3.11l-4.45-2a.22.22 0 01-.11-.3zM86.27 197a.22.22 0 01.28-.15l1.06.29a.24.24 0 01.16.28L86 203.87l3 .82a.23.23 0 01.16.28l-.26.95a.23.23 0 01-.28.16l-4.24-1.18a.23.23 0 01-.16-.28zM94.22 199a.23.23 0 01.27-.18l1.09.21a.23.23 0 01.18.27l-1.51 7.79a.24.24 0 01-.27.19l-1.09-.28a.23.23 0 01-.18-.27zM98.92 200a.21.21 0 01.23-.29l1.22.12a.22.22 0 01.19.15l1.77 5.37h.08l2.82-4.9a.21.21 0 01.21-.11l1.22.12a.21.21 0 01.17.33l-4.52 7.66a.23.23 0 01-.22.11h-.11a.2.2 0 01-.19-.15zM110.06 200.72a.24.24 0 01.23-.23h1.12a.23.23 0 01.22.23l-.13 7.94a.24.24 0 01-.23.23h-1.12a.23.23 0 01-.22-.23zM115.85 200.59a.23.23 0 01.21-.24h.3l5.42 4.87-.41-4.94a.22.22 0 01.21-.24l1.1-.1a.23.23 0 01.24.21l.67 8.05a.23.23 0 01-.21.24h-.29l-5.45-5.07.42 5.14a.23.23 0 01-.2.25l-1.09.09a.24.24 0 01-.25-.21zM130.66 198.41a4.56 4.56 0 013.09.49.24.24 0 01.08.33l-.57.92a.2.2 0 01-.3.06 2.7 2.7 0 00-4 3 2.73 2.73 0 003.21 2.13 3.67 3.67 0 001.33-.58l-.21-1-.94.2a.21.21 0 01-.26-.17l-.2-.93a.22.22 0 01.18-.27l2.25-.47a.23.23 0 01.26.18l.63 3a.24.24 0 010 .21 6.12 6.12 0 01-2.76 1.37 4.32 4.32 0 11-1.76-8.45zM142 195.59a.22.22 0 01.11-.29l2.64-1.06a4.2 4.2 0 113.14 7.79l-2.64 1.06a.22.22 0 01-.25-.09zm5.21 5.13a2.74 2.74 0 00-2.05-5.08l-1.27.51 2 5.08zM152.07 191.2a.23.23 0 01.09-.3l1-.52a.24.24 0 01.31.1l3.66 7.05a.24.24 0 01-.1.31l-1 .51a.23.23 0 01-.31-.1zM160.17 186.12a4.57 4.57 0 013.06-.64.23.23 0 01.2.28l-.21 1.06a.2.2 0 01-.26.16 2.74 2.74 0 101.1 5.05 3.8 3.8 0 001-1l-.55-.85-.81.51a.21.21 0 01-.31 0l-.51-.8a.22.22 0 01.07-.32l1.93-1.24a.22.22 0 01.31.07l1.66 2.59a.23.23 0 010 .21 6.08 6.08 0 01-2.08 2.27 4.32 4.32 0 01-4.66-7.27zM166 182.4a.23.23 0 010-.32l.87-.69a.24.24 0 01.32 0l4.9 6.26a.21.21 0 010 .31l-.87.69a.22.22 0 01-.32 0zM172.25 178.8l-1.36 1.2a.22.22 0 01-.32 0l-.66-.72a.22.22 0 010-.32l3.86-3.55a.23.23 0 01.32 0l.67.73a.22.22 0 010 .32l-1.35 1.24 4.56 5a.23.23 0 010 .32l-.82.76a.23.23 0 01-.32 0zM181.33 178.07l-.27-.82a.28.28 0 01.21-.36A4 4 0 00183 176a1 1 0 00.05-1.43c-.46-.41-1.12-.3-2.09.17s-2.39.89-3.44-.06a2.4 2.4 0 01.1-3.55 4.15 4.15 0 012.2-1.24.31.31 0 01.35.21l.2.8a.31.31 0 01-.18.4 3.92 3.92 0 00-1.6.8 1 1 0 00-.09 1.35c.42.37 1 .3 2-.15 1.13-.55 2.54-1.09 3.69-.05a2.53 2.53 0 01-.08 3.64 3.89 3.89 0 01-2.47 1.34c-.16.04-.24.05-.31-.16z"
+                ></path>
+                <path
+                  fill="none"
+                  stroke="#231F20"
+                  strokeMiterlimit="10"
+                  strokeWidth="1.571"
+                  d="M111.99 130.1L105.97 130.1 101.17 139.53 106.58 164.93 112 164.97"
+                ></path>
+                <path
+                  fill="none"
+                  stroke="#231F20"
+                  strokeMiterlimit="10"
+                  strokeWidth="1.571"
+                  d="M112 164.97L117.42 164.93 122.83 139.53 118.03 130.1 112.01 130.1"
+                ></path>
+                <path
+                  fill="none"
+                  stroke="#231F20"
+                  strokeMiterlimit="10"
+                  strokeWidth="1.571"
+                  d="M112 135.61L112 151.93"
+                ></path>
+                <path
+                  fill="none"
+                  stroke="#231F20"
+                  strokeMiterlimit="10"
+                  strokeWidth="1.571"
+                  d="M108.38 140.76L115.62 140.76"
+                ></path>
+                <path
+                  d="M110.47 59a11.69 11.69 0 00-11.68 11.72v1h12.63V59zm-.94 10.73h-8.8a9.8 9.8 0 018.8-8.79zm0 0"
+                ></path>
+                <path
+                  fill="none"
+                  stroke="#000"
+                  strokeMiterlimit="10"
+                  strokeWidth="1.819"
+                  d="M99.57 75a11.34 11.34 0 0022.67 0z"
+                ></path>
+                <circle cx="103.09" cy="92.05" r="2.81"></circle>
+                <path
+                  fill="none"
+                  stroke="#000"
+                  strokeMiterlimit="10"
+                  strokeWidth="1.819"
+                  d="M105.72 85.18L103.09 92.05"
+                ></path>
+                <circle cx="118.71" cy="92.05" r="2.81"></circle>
+                <path
+                  fill="none"
+                  stroke="#000"
+                  strokeMiterlimit="10"
+                  strokeWidth="1.819"
+                  d="M116.09 85.18L118.71 92.05"
+                ></path>
+                <path
+                  fill="none"
+                  stroke="#000"
+                  strokeMiterlimit="10"
+                  strokeWidth="1.819"
+                  d="M122.24 74.67s-.28-6.71 3-5.77"
+                ></path>
+                <path
+                  fill="#231F20"
+                  d="M11.59 108.6H10.2a.28.28 0 01-.26-.28v-.91a.36.36 0 01.09-.22l2.11-1.65h1.34a.27.27 0 01.26.27v9.32a.27.27 0 01-.26.27h-1.61a.28.28 0 01-.28-.27zM21.14 113.87c.68-.22 2.61-.89 2.91-2.38a4.36 4.36 0 01-1.37.29 2.92 2.92 0 01-2.89-3.15 3.35 3.35 0 013.32-3.33c2.25 0 3.5 1.69 3.5 4a6.72 6.72 0 01-4.88 6.39.35.35 0 01-.45-.24l-.42-1.11c-.06-.23-.01-.34.28-.47zm3.39-5.17a1.39 1.39 0 10-1.39 1.41 1.39 1.39 0 001.39-1.41zM193.52 110.34a2.77 2.77 0 01-1.49-2.25c0-1.63 1.45-2.66 3.22-2.66s3.29 1 3.29 2.66a2.88 2.88 0 01-1.49 2.23v.06a3.07 3.07 0 011.77 2.44c0 1.58-1.4 2.77-3.57 2.77s-3.5-1.19-3.5-2.77c0-1.32 1.5-2.32 1.77-2.48zm1.77 3.42a1.16 1.16 0 001.18-1.08 1.19 1.19 0 10-2.37 0 1.16 1.16 0 001.19 1.08zm1-5.63a1 1 0 00-2.05 0c0 .53.33 1 1 1.21a1.35 1.35 0 001.07-1.21zM209.16 105.22a.33.33 0 01.45.23l.42 1.12c.06.17 0 .33-.28.42-.68.21-2.61.88-2.91 2.38a4.1 4.1 0 011.37-.29 2.91 2.91 0 012.89 3.15 3.34 3.34 0 01-3.32 3.32c-2.25 0-3.5-1.68-3.5-4a6.8 6.8 0 014.88-6.33zm-1.41 8.33a1.4 1.4 0 10-1.39-1.4 1.4 1.4 0 001.39 1.4z"
+                ></path>
+              </svg>
+
+              <h2 class="mb-0 font-gtreg text-base">Life in Numbers</h2>
+            </div>
+          </a>
+        </div>
+      </div>
+    </section>
+    <main>
+      <section class="py-8 md:py-16 bg-gray-50 dark:bg-gray-800">
+        <div class="container mx-auto grid grid-cols-1 gap-16 md:grid-cols-2">
+          <div>
+            <h2>About</h2>
+
+            <p class="mb-0">
+              Hello, my name is Shane Prendergast. I'm a {DOB} year old
+              developer who lives in Macclesfield, UK. I have a BSc (Hons) Web
+              Design and Development degree from the University of Hull and I'm
+              currently working at Gather Content.
+            </p>
+
+            <p class="mb-0">
+              Primarily a Front-End Developer, I also have a strong interest in
+              Design and UX. At the moment I'm working with various Javascript
+              frameworks and I'm passionate about creating - and constantly
+              leaning about - Web Accessibility.
+            </p>
+
+            <p class="mb-0">
+              Webknit is an online pseudonym that I have used since my time at
+              university and this website is a digital collection of my life,
+              both work and personal.
+            </p>
+          </div>
+
+          <div>
+            <h2>Experience</h2>
+
+            <ul>
+              <li
+                class="border-grey-100 mb-4 flex justify-between border-b border-solid pb-4"
+              >
+                <a href="https://gathercontent.com/">Gather content</a>
+
+                <span>Nov 2022 - Present</span>
+              </li>
+
+              <li
+                class="border-grey-100 mb-4 flex justify-between border-b border-solid pb-4"
+              >
+                <a href="https://www.nexerdigital.com/"
+                  >Nexer (formerly Sigma)</a
+                >
+
+                <span>Oct 2018 - June 2022</span>
+              </li>
+
+              <li
+                class="border-grey-100 mb-4 flex justify-between border-b border-solid pb-4"
+              >
+                <a href="https://www.steinias.com/">Stein IAS</a>
+
+                <span>Sept 2014 - Oct 2018</span>
+              </li>
+
+              <li
+                class="border-grey-100 mb-4 flex justify-between border-b border-solid pb-4"
+              >
+                <a href="https://www.mccannmanchester.com/"
+                  >McCann Manchester</a
+                >
+
+                <span>Jan 2013 - Sept 2014</span>
+              </li>
+
+              <li
+                class="border-grey-100 mb-4 flex justify-between border-b border-solid pb-4"
+              >
+                Webknit
+
+                <span>April 2011 - Present</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </section>
+      <section class="py-8 md:py-16 bg-gray-100 dark:bg-gray-800">
+        <div class="container mx-auto grid grid-cols-1 gap-16 md:grid-cols-2">
+          <div class="">
+            <h2 class="">Work</h2>
+
+            <div class="border-grey-100 mb-6 border-b border-solid pb-6">
+              <h3>
+                <a href="https://fed-now.vercel.app/">FedNow Explorer</a>
+              </h3>
+
+              <p class="mb-0">
+                Funky site for the Federal Reserve. React, Next.js, Custom
+                Google maps, user journey, resource library.
+              </p>
+            </div>
+
+            <div class="border-grey-100 mb-6 border-b border-solid pb-6">
+              <h3>
+                <a href="https://black-diamond.vercel.app/">Black Diamond</a>
+              </h3>
+
+              <p class="mb-0">
+                Statistics and streaks from a range of football leagues for the
+                purposes of finding the best odds in betting markets.
+              </p>
+            </div>
+
+            <div class="border-grey-100 mb-6 border-b border-solid pb-6">
+              <h3>
+                <a href="https://memoryup.webknit.co.uk/">MemoryUp</a>
+              </h3>
+
+              <p class="mb-0">
+                Following my personal success with
+                <a href="https://fetest.webknit.co.uk/">FEtest</a> I decided to
+                made a fully fledged application that allowed users to create
+                their own Questions.
+              </p>
+            </div>
+
+            <div class="grid grid-cols-2">
+              <div class="border-grey-100 mb-6 border-b border-solid pb-6">
+                <div class="">
+                  <h3 class="mb-0 text-base">
+                    <a href="https://www.royalroms.com/">RoyalRoms</a>
+                  </h3>
+                </div>
+              </div>
+
+              <div class="border-grey-100 mb-6 border-b border-solid pb-6">
+                <div class="">
+                  <h3 class="mb-0 text-base">
+                    <a href="http://www.smartbow.webknit.co.uk/">Smartbow</a>
+                  </h3>
+                </div>
+              </div>
+
+              <div class="border-grey-100 mb-6 border-b border-solid pb-6">
+                <div class="">
+                  <h3 class="mb-0 text-base">
+                    <a href="https://westernislescruises.co.uk/">
+                      Westnern Isles Cruises
+                    </a>
+                  </h3>
+                </div>
+              </div>
+
+              <div class="border-grey-100 mb-6 border-b border-solid pb-6">
+                <div class="">
+                  <h3 class="mb-0 text-base">
+                    <a href="http://www.beardrevered.com/">Beardrevered</a>
+                  </h3>
+                </div>
+              </div>
+
+              <div class="border-grey-100 mb-6 border-b border-solid pb-6">
+                <div class="">
+                  <h3 class="mb-0 text-base">
+                    <a href="http://nickandsteph.webknit.co.uk/">
+                      Nick and Steph
+                    </a>
+                  </h3>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="o-flex__col o-flex__col--6">
+            <h2 class="u-mb-8">Play</h2>
+
+            <div class="border-grey-100 mb-6 border-b border-solid pb-6">
+              <h3>
+                <a href="http://rideforthechild.co.uk/">Ride For The Child</a>
+              </h3>
+
+              <p class="mb-0">
+                In September 2016 I cycled 3200 miles across America over a
+                period of 28 days. I raised over £12k for children with deafness
+                or cancer. The website was a central hub of information.
+              </p>
+            </div>
+
+            <div class="border-grey-100 mb-6 border-b border-solid pb-6">
+              <h3>
+                <a href="https://chasingchallenges.webknit.co.uk/">
+                  Chasing Challenges
+                </a>
+              </h3>
+
+              <p class="mb-0">
+                Create and showcase challenges using synced activities from the
+                world's most popular human tracking service, Strava.
+              </p>
+            </div>
+
+            <div class="border-grey-100 mb-6 border-b border-solid pb-6">
+              <h3>
+                <a href="http://lifeinnumbers.webknit.co.uk/">
+                  Life In Numbers
+                </a>
+              </h3>
+
+              <p class="mb-0">
+                A project which outputs some interesting facts digits based on a
+                users DOB.
+              </p>
+            </div>
+
+            <div class="mb-6 grid grid-cols-2 gap-4">
+              <div class="border-grey-100 mb-6 border-b border-solid pb-6">
+                <div class="">
+                  <h3 class="mb-0 text-base">
+                    <a href="https://password-generator-webknit.vercel.app/">
+                      Password generator
+                    </a>
+                  </h3>
+                </div>
+              </div>
+
+              <div class="border-grey-100 mb-6 border-b border-solid pb-6">
+                <div class="">
+                  <h3 class="mb-0 text-base">
+                    <a href="https://calculate-rust.vercel.app/">Calculate</a>
+                  </h3>
+                </div>
+              </div>
+
+              <div class="border-grey-100 mb-6 border-b border-solid pb-6">
+                <div class="">
+                  <h3 class="mb-0 text-base">
+                    <a href="https://click-me-webknit.vercel.app/">
+                      Click me
+                    </a>
+                  </h3>
+                </div>
+              </div>
+
+              <div class="border-grey-100 mb-6 border-b border-solid pb-6">
+                <div class="">
+                  <h3 class="mb-0 text-base">
+                    <a href="http://paceyourself.webknit.co.uk">
+                      Pace Yourself
+                    </a>
+                  </h3>
+                </div>
+              </div>
+
+              <div class="border-grey-100 mb-6 border-b border-solid pb-6">
+                <div class="">
+                  <h3 class="mb-0 text-base">
+                    <a href="http://won.webknit.co.uk/">Worthy Of Note</a>
+                  </h3>
+                </div>
+              </div>
+
+              <div class="border-grey-100 mb-6 border-b border-solid pb-6">
+                <div class="">
+                  <h3 class="mb-0 text-base">
+                    <a href="http://sass-variable-generator.webknit.co.uk/#/">
+                      Sass Variable Generator
+                    </a>
+                  </h3>
+                </div>
+              </div>
+
+              <div class="border-grey-100 mb-6 border-b border-solid pb-6">
+                <div class="">
+                  <h3 class="mb-0 text-base">
+                    <a href="https://places.webknit.co.uk/">Places</a>
+                  </h3>
+                </div>
+              </div>
+
+              <div class="border-grey-100 mb-6 border-b border-solid pb-6">
+                <div class="">
+                  <h3 class="mb-0 text-base">
+                    <a href="http://fetest.webknit.co.uk/">FEtest</a>
+                  </h3>
+                </div>
+              </div>
+
+              <div class="border-grey-100 mb-6 border-b border-solid pb-6">
+                <div class="">
+                  <h3 class="mb-0 text-base">
+                    <a href="http://moustache.webknit.co.uk/">Moustache</a>
+                  </h3>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>
