@@ -852,15 +852,11 @@ video {
     min-height: 250px;
   }
 
-  .lg\:min-h-\[300px\] {
-    min-height: 300px;
-  }
-
   .lg\:max-w-full {
     max-width: 100%;
   }
 
-  .lg\:grid-cols-5 {
-    grid-template-columns: repeat(5, minmax(0, 1fr));
+  .lg\:grid-cols-4 {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
   }
 }
